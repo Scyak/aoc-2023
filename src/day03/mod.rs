@@ -34,6 +34,11 @@ fn handle_star(stars: &mut Vec<Star>, x: usize, y: usize, cal_nr_idx: usize) {
     // check if we've already found something adjacent to this star before
     for star in stars.iter_mut() {
         if star.x == x && star.y == y {
+            // if this nr has already been counted for this star, don't do it again
+            if cal_nr_idx == star.cal_nr_1_idx || cal_nr_idx == star.cal_nr_2_idx {
+                found_star = true;
+                continue;
+            }
             match star.adjacent_nrs {
                 0 => star.cal_nr_1_idx = cal_nr_idx,
                 1 => star.cal_nr_2_idx = cal_nr_idx,
@@ -64,7 +69,6 @@ fn check_adjacency(
     y: usize,
     cal_nr_idx: usize,
     stars: &mut Vec<Star>,
-    last_star_idx: &mut usize,
 ) -> bool {
     // check coordinates from x-1 to x+1 and y-1 to y+1
     for i in -1..2 {
@@ -85,8 +89,7 @@ fn check_adjacency(
                     Some(c) => {
                         // for part two: check if star is gear and note calibration numbers
                         // cal nrs are noted as indexes in list of cal nrs since the full nr isn't necessarily known at this point
-                        if *c == '*' && *last_star_idx != cal_nr_idx {
-                            *last_star_idx = cal_nr_idx;
+                        if *c == '*' {
                             handle_star(stars, x_idx, y_idx, cal_nr_idx);
                         }
 
@@ -115,7 +118,6 @@ fn part_one_two(input: &Vec<Vec<char>>) -> (u32, u32) {
     let mut current_number = 0; // for putting together the current number
     let mut is_cal_nr = false; // whether current nr is a calibration nr
     let mut cal_nr_idx = 0; // index of the current cal nr in the cal nr list
-    let mut last_star_idx: usize = usize::MAX; // index of the last cal nr that had a star adjacent (used to not double count star adjacencies)
 
     // check input char by char
     for (y, line) in input.iter().enumerate() {
@@ -123,7 +125,7 @@ fn part_one_two(input: &Vec<Vec<char>>) -> (u32, u32) {
             if char.is_digit(10) {
                 // put together current number: move one order of magnitude (*10) and add new digit
                 current_number = current_number * 10 + char.to_digit(10).expect("Not a digit");
-                if check_adjacency(input, x, y, cal_nr_idx, &mut stars, &mut last_star_idx) {
+                if check_adjacency(input, x, y, cal_nr_idx, &mut stars) {
                     // adjacent symbol found, this is a calibration nr
                     is_cal_nr = true;
                 }
