@@ -9,6 +9,7 @@ pub fn run_day() {
         "Day 4 Part 2: The total number of scratch cards is {}",
         part_two()
     );
+    println!();
 }
 
 fn part_one() -> u32 {

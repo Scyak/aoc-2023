@@ -4,6 +4,7 @@ pub fn run_day() {
         "Day 5 Part 2: The actual lowest location nr is {}",
         part_two()
     );
+    println!();
 }
 
 struct Seed {
@@ -62,7 +63,6 @@ fn part_one() -> u32 {
         for seed in &mut seeds {
             seed.converted = false;
         }
-        println!();
     }
 
     let min_num = seeds

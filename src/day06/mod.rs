@@ -10,6 +10,7 @@ const LONG_RACE: Race = Race{time: 53897698, distance: 313109012141201};
 pub fn run_day() {
     println!("Day 6 Part 1: Product of options to win each race is {}", part_one());
     println!("Day 6 Part 2: There are {} ways to win the long race", part_two());
+    println!()
 }
 
 fn part_one() -> u64 {

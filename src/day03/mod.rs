@@ -9,6 +9,7 @@ pub fn run_day() {
         result.0
     );
     println!("Day 3 Part 1: The sum of the gear ratios is {}", result.1);
+    println!()
 }
 
 #[derive(Debug)]
