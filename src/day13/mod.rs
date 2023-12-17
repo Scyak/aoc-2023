@@ -10,6 +10,8 @@ pub fn run_day() {
         "Day 13 Part 2: With smudges fixed, sum is {}",
         part_two(&input)
     );
+
+    println!();
 }
 
 fn parse_input(input_str: &str) -> Vec<Vec<Vec<char>>> {
